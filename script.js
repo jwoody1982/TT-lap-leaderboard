@@ -15,7 +15,7 @@ fetch('data.csv')
 
     const container = document.querySelector('.leaderboard');
 
-    // Header row
+    // Add header row
     container.innerHTML += `
       <div class="entry header">
         <div class="position">Pos</div>
@@ -33,13 +33,12 @@ fetch('data.csv')
     }
 
     leaderboard.forEach((entry, i) => {
-      // Calculate gap to the driver above
-      let gap = '-';
+      let gapToAbove = '-';
       if (i > 0) {
         const currentTime = parseTime(entry.time);
         const aboveTime = parseTime(leaderboard[i - 1].time);
-        const diff = currentTime - aboveTime;
-        gap = `+${diff.toFixed(2)}s`;
+        const gap = currentTime - aboveTime;
+        gapToAbove = `+${gap.toFixed(2)}s`;
       }
 
       const html = `
@@ -48,7 +47,7 @@ fetch('data.csv')
           <div class="name">${entry.name}</div>
           <div class="car">${entry.car}</div>
           <div class="time">${entry.time}</div>
-          <div class="gap">${gap}</div>
+          <div class="gap">${gapToAbove}</div>
           <div class="speed">${entry.speed}</div>
         </div>
       `;
