@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const lines = csv.trim().split("\n");
       const leaderboard = document.getElementById("leaderboard");
 
-      // Optionally show headers (optional)
+      // Manually create a header row
       const headerRow = document.createElement("div");
       headerRow.className = "entry header";
       headerRow.innerHTML = `
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       leaderboard.appendChild(headerRow);
 
-      // Start from line 1 (skip actual CSV headers)
+      // Loop through remaining rows (skip header line in CSV)
       lines.slice(1).forEach((line, index) => {
         const cols = line.split(",");
 
