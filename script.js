@@ -1,76 +1,50 @@
-const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQOUHhPhIQyhFGOCuPUH0TSfz8xTOmWEOpHjhO2-zvA5MxiFyp4Pyu4MtIALk_hG1OKUK91cCuzuDIX/pubhtml';
+window.addEventListener('DOMContentLoaded', () => {
+  const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQOUHhPhIQyhFGOCuPUH0TSfz8xTOmWEOpHjhO2-zvA5MxiFyp4Pyu4MtIALk_hG1OKUK91cCuzuDIX/pub?gid=0&single=true&output=csv';
 
-function init() {
-  Tabletop.init({
-    key: publicSpreadsheetUrl,
-    simpleSheet: true,
-    callback: showInfo,
-    parseNumbers: true
-  });
-}
+  Papa.parse(publicSpreadsheetUrl, {
+    download: true,
+    header: false,
+    complete: function(results) {
+      const data = results.data;
+      const leaderboard = document.getElementById('leaderboard');
 
-function showInfo(data) {
-  const container = document.getElementById('leaderboard');
-  container.innerHTML = ''; // clear
-  const table = document.createElement('table');
-  table.classList.add('leaderboard');
+      if (!leaderboard) return;
 
-  // Header
-  const header = document.createElement('tr');
-  ['#','Name','Car','Time','Gap','Avg Speed'].forEach(h => {
-    const th = document.createElement('th');
-    th.textContent = h;
-    header.appendChild(th);
-  });
-  table.appendChild(header);
+      let html = '<table><thead><tr><th>Pos</th><th>Name</th><th>Car</th><th>Time</th><th>Gap</th><th>Avg Speed</th></tr></thead><tbody>';
 
-  let prevMs = null;
-  data.forEach((row, idx) => {
-    const tr = document.createElement('tr');
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (row.length < 8) continue;
 
-    // Position
-    const posTd = document.createElement('td');
-    posTd.textContent = idx + 1;
-    tr.appendChild(posTd);
+        const pos = row[1];
+        const name = row[4];
+        const car = row[5];
+        const time = row[7];
+        const speed = row[8];
+        const gap = i === 1 ? '-' : calcGap(data[1][7], row[7]);
 
-    // Name, Car, Time, Speed
-    ['Name','Car','Time','Avg Speed'].forEach(field => {
-      const td = document.createElement('td');
-      td.textContent = row[field] || '-';
-      tr.appendChild(td);
-    });
+        html += `<tr>
+          <td>${pos}</td>
+          <td>${name}</td>
+          <td>${car}</td>
+          <td>${time}</td>
+          <td>${gap}</td>
+          <td>${speed}</td>
+        </tr>`;
+      }
 
-    // Gap calculation
-    const gapTd = document.createElement('td');
-    if (idx === 0) {
-      gapTd.textContent = '-';
-    } else {
-      const currMs = timeToMs(row['Time']);
-      const diff = currMs - prevMs;
-      gapTd.textContent = '+' + msToTime(diff);
-      prevMs = currMs;
+      html += '</tbody></table>';
+      leaderboard.innerHTML = html;
     }
-    if (idx === 0) prevMs = timeToMs(data[0]['Time']);
-    tr.insertBefore(gapTd, tr.children[tr.children.length - 1]);
-    
-    table.appendChild(tr);
   });
 
-  container.appendChild(table);
-}
-
-function timeToMs(t) {
-  const [m, rest] = t.split(':');
-  const [s, ms] = rest.split('.');
-  return (+m * 60 + +s) * 1000 + (+ms);
-}
-
-function msToTime(ms) {
-  const totalSec = Math.floor(ms / 1000);
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  const c = Math.floor((ms % 1000) / 10);
-  return `${m}:${String(s).padStart(2,'0')}.${String(c).padStart(2,'0')}`;
-}
-
-window.addEventListener('DOMContentLoaded', init);
+  function calcGap(firstTime, currentTime) {
+    const toSeconds = t => {
+      const [min, sec] = t.split(':');
+      const [whole, frac = '0'] = sec.split('.');
+      return parseInt(min) * 60 + parseInt(whole) + parseFloat(`0.${frac}`);
+    };
+    const gap = toSeconds(currentTime) - toSeconds(firstTime);
+    return `+${gap.toFixed(2)}s`;
+  }
+});
