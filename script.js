@@ -5,7 +5,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const lines = csv.trim().split("\n");
       const leaderboard = document.getElementById("leaderboard");
 
-      lines.slice(1).forEach((line, index) => { // Skip the first row
+      // Optionally show headers (optional)
+      const headerRow = document.createElement("div");
+      headerRow.className = "entry header";
+      headerRow.innerHTML = `
+        <div class="position">Pos</div>
+        <div class="name">Name</div>
+        <div class="car">Car</div>
+        <div class="time">Time</div>
+        <div class="speed">Avg Speed</div>
+      `;
+      leaderboard.appendChild(headerRow);
+
+      // Start from line 1 (skip actual CSV headers)
+      lines.slice(1).forEach((line, index) => {
         const cols = line.split(",");
 
         if (cols.length >= 9) {
