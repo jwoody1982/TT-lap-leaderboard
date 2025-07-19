@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const lines = csv.trim().split("\n");
       const leaderboard = document.getElementById("leaderboard");
 
-      lines.forEach((line, index) => {
+      lines.slice(1).forEach((line, index) => { // Skip the first row
         const cols = line.split(",");
 
         if (cols.length >= 9) {
