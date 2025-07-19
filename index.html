@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TT Lap Leaderboard</title>
+  <title>TT Leaderboard</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Tabletop.js for Google Sheets -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <img src="sim-centre-logo.jpg" alt="Sim Centre Logo" class="logo" />
-    <h1>TT Lap Leaderboard</h1>
-    <div class="leaderboard"></div>
+    <img src="sim centre 3.jpg" alt="Sim Centre Logo" class="logo" />
+    <h1>1-Lap Challenge Leaderboard</h1>
+    <div id="leaderboard" class="leaderboard-table">
+      <!-- Leaderboard will load here -->
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
