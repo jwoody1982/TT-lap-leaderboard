@@ -58,3 +58,14 @@ h1 {
 .car {
   flex: 2;
   text-align: left;
+}
+
+.time {
+  width: 110px;
+  text-align: right;
+}
+
+.speed {
+  width: 100px;
+  text-align: right;
+}
