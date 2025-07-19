@@ -1,7 +1,7 @@
 fetch('data.csv')
   .then(response => response.text())
   .then(text => {
-    const rows = text.trim().split('\n').slice(1); // skip header
+    const rows = text.trim().split('\n');
     const leaderboard = rows.map(row => {
       const cols = row.split('\t');
       return {
@@ -15,7 +15,6 @@ fetch('data.csv')
 
     const container = document.querySelector('.leaderboard');
 
-    // Header row
     container.innerHTML += `
       <div class="entry header">
         <div class="position">Pos</div>
@@ -33,16 +32,14 @@ fetch('data.csv')
     }
 
     leaderboard.forEach((entry, i) => {
-      // Calculate gap to the driver above
       let gap = '-';
       if (i > 0) {
-        const currentTime = parseTime(entry.time);
-        const aboveTime = parseTime(leaderboard[i - 1].time);
-        const diff = currentTime - aboveTime;
-        gap = `+${diff.toFixed(2)}s`;
+        const prev = parseTime(leaderboard[i - 1].time);
+        const curr = parseTime(entry.time);
+        gap = `+${(curr - prev).toFixed(2)}s`;
       }
 
-      const html = `
+      container.innerHTML += `
         <div class="entry">
           <div class="position">${entry.position}</div>
           <div class="name">${entry.name}</div>
@@ -52,6 +49,5 @@ fetch('data.csv')
           <div class="speed">${entry.speed}</div>
         </div>
       `;
-      container.innerHTML += html;
     });
   });
