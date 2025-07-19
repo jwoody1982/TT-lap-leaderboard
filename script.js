@@ -1,7 +1,7 @@
 fetch('data.csv')
   .then(response => response.text())
   .then(text => {
-    const rows = text.trim().split('\n').slice(0); // include header
+    const rows = text.trim().split('\n').slice(1); // skip header
     const leaderboard = rows.map(row => {
       const cols = row.split('\t');
       return {
@@ -33,11 +33,12 @@ fetch('data.csv')
     }
 
     leaderboard.forEach((entry, i) => {
+      // Calculate gap to the driver above
       let gap = '-';
       if (i > 0) {
-        const previousTime = parseTime(leaderboard[i - 1].time);
         const currentTime = parseTime(entry.time);
-        const diff = currentTime - previousTime;
+        const aboveTime = parseTime(leaderboard[i - 1].time);
+        const diff = currentTime - aboveTime;
         gap = `+${diff.toFixed(2)}s`;
       }
 
@@ -53,8 +54,4 @@ fetch('data.csv')
       `;
       container.innerHTML += html;
     });
-  })
-  .catch(err => {
-    console.error('Error loading CSV:', err);
-    document.querySelector('.leaderboard').innerHTML = '<p>Failed to load leaderboard data.</p>';
   });
