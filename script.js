@@ -1,4 +1,4 @@
-fetch('data.csv')
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQOUHhPhIQyhFGOCuPUH0TSfz8xTOmWEOpHjhO2-zvA5MxiFyp4Pyu4MtIALk_hG1OKUK91cCuzuDIX/pub?gid=0&single=true&output=csv')
   .then(response => response.text())
   .then(text => {
     const rows = text.trim().split('\n');
