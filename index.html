@@ -2,31 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TT Lap Leaderboard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <img src="logo.jpg" alt="Logo" class="logo" />
-  <input type="text" id="searchInput" placeholder="Search for a driver..." />
-  <table id="leaderboard">
-    <thead>
-      <tr>
-        <th>Pos</th>
-        <th>Name</th>
-        <th>Car</th>
-        <th>Time</th>
-        <th>Gap</th>
-        <th>Avg Speed</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- ✅ ADD THIS LINE -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
-  
-  <!-- Your script -->
-  <script src="script.js"></script>
+  <div class="container">
+    <img src="sim-centre-logo.jpg" alt="Sim Centre Logo" class="logo"/>
+    <h1>TT Lap Leaderboard</h1>
+    <div id="leaderboard">Loading...</div>
+  </div>
 </body>
 </html>
