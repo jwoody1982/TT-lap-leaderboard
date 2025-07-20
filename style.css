@@ -1,53 +1,35 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #111;
-  color: #eee;
-  display: flex;
-  justify-content: center;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
 }
-
 .container {
-  width: 90%;
   max-width: 900px;
-  margin-top: 40px;
-}
-
-.logo {
-  display: block;
-  max-width: 300px;
-  margin: 0 auto 20px;
-}
-
-h1 {
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
-  font-size: 2em;
-  margin-bottom: 30px;
 }
-
-.leaderboard {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.logo {
+  width: 200px;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-.entry {
-  display: grid;
-  grid-template-columns: 50px 1fr 1.2fr 100px 90px 100px;
-  background-color: #222;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border-bottom: 1px solid #333;
   padding: 10px;
-  border-radius: 8px;
-  align-items: center;
+  text-align: center;
 }
-
-.header {
-  background-color: #333;
-  font-weight: bold;
-  border-bottom: 2px solid #666;
+thead {
+  background-color: #1e1e1e;
 }
-
-.position, .name, .car, .time, .gap, .speed {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+tbody tr:nth-child(even) {
+  background-color: #1a1a1a;
 }

@@ -7,7 +7,6 @@ window.addEventListener('DOMContentLoaded', () => {
     complete: function(results) {
       const data = results.data;
       const leaderboard = document.getElementById('leaderboard');
-
       if (!leaderboard) return;
 
       let html = '<table><thead><tr><th>Pos</th><th>Name</th><th>Car</th><th>Time</th><th>Gap</th><th>Avg Speed</th></tr></thead><tbody>';
