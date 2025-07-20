@@ -47,3 +47,15 @@ window.addEventListener('DOMContentLoaded', () => {
     return `+${gap.toFixed(2)}s`;
   }
 });
+document.getElementById("searchInput").addEventListener("input", function () {
+  const query = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#leaderboard table tbody tr");
+
+  rows.forEach(row => {
+    const nameCell = row.querySelector("td:nth-child(2)");
+    if (nameCell) {
+      const name = nameCell.textContent.toLowerCase();
+      row.style.display = name.includes(query) ? "" : "none";
+    }
+  });
+});
